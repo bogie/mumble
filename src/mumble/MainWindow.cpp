@@ -1522,10 +1522,15 @@ void MainWindow::openTextMessageDialog(ClientUser *p) {
 	if (p && (res == QDialog::Accepted)) {
 		QString msg = texm->message();
 
-		if (! msg.isEmpty()) {
-			g.sh->sendUserTextMessage(p->uiSession, msg);
-			g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), texm->message()), tr("Message to %1").arg(p->qsName), true);
-		}
+        if (! msg.isEmpty() ) {
+            if(! texm->bPriorityMessage) {
+                g.sh->sendUserTextMessage(p->uiSession, msg);
+                g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), texm->message()), tr("Message to %1").arg(p->qsName), true);
+            } else {
+                g.sh->sendUserPriorityMessage(p->uiSession, msg);
+                g.l->log(Log::TextMessage, tr("Priority to %1: %2").arg(Log::formatClientUser(p, Log::Target), texm->message()), tr("Message to %1").arg(p->qsName), true);
+            }
+        }
 	}
 	delete texm;
 }

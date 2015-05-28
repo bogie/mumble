@@ -37,13 +37,20 @@ TextMessage::TextMessage(QWidget *p, QString title, bool bChannel) : QDialog(p) 
 	setupUi(this);
 	if (!bChannel)
 		qcbTreeMessage->setHidden(true);
+    else
+        qcbPriorityMessage->setHidden(true);
 	setWindowTitle(title);
 	rteMessage->installEventFilter(this);
 	bTreeMessage = false;
+    bPriorityMessage = false;
 }
 
 void TextMessage::on_qcbTreeMessage_stateChanged(int s) {
 	bTreeMessage = s == Qt::Checked ? true : false;
+}
+
+void TextMessage::on_qcbPriorityMessage_stateChanged(int s) {
+    bPriorityMessage = s == Qt::Checked ? true : false;
 }
 
 QString TextMessage::autoFormat(QString qsPlain) {

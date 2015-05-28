@@ -729,6 +729,14 @@ void ServerHandler::sendUserTextMessage(unsigned int uiSession, const QString &m
 	sendMessage(mptm);
 }
 
+void ServerHandler::sendUserPriorityMessage(unsigned int uiSession, const QString &message_) {
+    MumbleProto::TextMessage mptm;
+    mptm.add_session(uiSession);
+    mptm.set_message(u8(message_));
+    mptm.set_priority(true);
+    sendMessage(mptm);
+}
+
 void ServerHandler::sendChannelTextMessage(unsigned int channel, const QString &message_, bool tree) {
 	MumbleProto::TextMessage mptm;
 	if (tree) {

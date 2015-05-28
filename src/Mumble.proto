@@ -239,6 +239,8 @@ message TextMessage {
 	repeated uint32 tree_id = 4;
 	// The UTF-8 encoded message. May be HTML if the server allows.
 	required string message = 5;
+	// should the recipient be notified explicitly
+	optional bool priority = 6;
 }
 
 message PermissionDenied {

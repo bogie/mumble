@@ -691,6 +691,13 @@ void MainWindow::msgTextMessage(const MumbleProto::TextMessage &msg) {
 
 	g.l->log(Log::TextMessage, tr("%2%1: %3").arg(name).arg(target).arg(u8(msg.message())),
 	         tr("Message from %1").arg(plainName));
+    if(msg.priority()) {
+        g.l->log(Log::TextMessage, tr("Priority: %2%1: %3").arg(name).arg(target).arg(u8(msg.message())),
+                 tr("Message from %1").arg(plainName));
+        QMessageBox priorityBox;
+        priorityBox.setText(tr("Priority message from %1: %2").arg(plainName).arg(u8(msg.message())));
+        priorityBox.exec();
+    }
 }
 
 void MainWindow::msgACL(const MumbleProto::ACL &msg) {

@@ -38,11 +38,13 @@
 # include <QtWidgets/QMainWindow>
 # include <QtWidgets/QSystemTrayIcon>
 # include <QtWidgets/QComboBox>
+# include <QtWidgets/QMessageBox>
 #else
 # include <QtCore/QWeakPointer>
 # include <QtGui/QMainWindow>
 # include <QtGui/QSystemTrayIcon>
 # include <QtGui/QComboBox>
+# include <QtGui<QMessageBox>
 #endif
 
 #include <QtNetwork/QAbstractSocket>

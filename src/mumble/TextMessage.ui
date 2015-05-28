@@ -29,6 +29,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="qcbPriorityMessage">
+     <property name="text">
+      <string>Send message as a priority</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="qbbButtons">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

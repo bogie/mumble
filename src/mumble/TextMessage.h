@@ -41,12 +41,14 @@ class TextMessage : public QDialog, public Ui::TextMessage {
 		QString qsRep;
 	public slots:
 		void on_qcbTreeMessage_stateChanged(int);
+        void on_qcbPriorityMessage_stateChanged(int);
 	public:
 		TextMessage(QWidget *parent = NULL, QString title = tr("Enter text"), bool bChannel = false);
 		QString message();
 		bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
 		static QString autoFormat(QString qsPlain);
 		bool bTreeMessage;
+        bool bPriorityMessage;
 };
 
 #endif
