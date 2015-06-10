@@ -44,6 +44,7 @@
 #include "Global.h"
 #include "GlobalShortcut.h"
 #include "Log.h"
+#include "PriorityMessageDialog.h"
 #include "MainWindow.h"
 #include "Overlay.h"
 #include "Plugins.h"
@@ -689,14 +690,14 @@ void MainWindow::msgTextMessage(const MumbleProto::TextMessage &msg) {
 		target += tr("(Channel) ");
 	}
 
-	g.l->log(Log::TextMessage, tr("%2%1: %3").arg(name).arg(target).arg(u8(msg.message())),
-	         tr("Message from %1").arg(plainName));
+
     if(msg.priority()) {
         g.l->log(Log::TextMessage, tr("Priority: %2%1: %3").arg(name).arg(target).arg(u8(msg.message())),
                  tr("Message from %1").arg(plainName));
-        QMessageBox priorityBox;
-        priorityBox.setText(tr("Priority message from %1: %2").arg(plainName).arg(u8(msg.message())));
-        priorityBox.exec();
+        g.pmsg->newMessage(tr("Priority message from %1: %2").arg(plainName).arg(u8(msg.message())));
+    } else {
+        g.l->log(Log::TextMessage, tr("%2%1: %3").arg(name).arg(target).arg(u8(msg.message())),
+                 tr("Message from %1").arg(plainName));
     }
 }
 

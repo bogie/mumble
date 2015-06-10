@@ -86,9 +86,10 @@ class ChatbarTextEdit : public QTextEdit {
 	signals:
 		void tabPressed(void);
 		void ctrlSpacePressed(void);
-		void entered(QString);
+        void entered(QString, bool priority);
 	public slots:
 		void pasteAndSend_triggered();
+        void pasteAndSendP_triggered();
 		void doResize();
 		void doScrollbar();
 		void addToHistory(const QString &str);

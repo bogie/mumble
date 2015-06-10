@@ -39,6 +39,7 @@
 #include "Cert.h"
 #include "Database.h"
 #include "Log.h"
+#include "PriorityMessageDialog.h"
 #include "Plugins.h"
 #include "Global.h"
 #include "LCD.h"
@@ -401,6 +402,9 @@ int main(int argc, char **argv) {
 	// Main Window
 	g.mw=new MainWindow(NULL);
 	g.mw->show();
+
+    // Initialize PriorityMessageDialog
+    g.pmsg = new PriorityMessageDialog(g.mw);
 
 #ifdef USE_DBUS
 	new MumbleDBus(g.mw);

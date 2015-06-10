@@ -285,7 +285,7 @@ class MainWindow : public QMainWindow, public MessageHandler, public Ui::MainWin
 		void userStateChanged();
 		void destroyUserInformation();
 		void trayAboutToShow();
-		void sendChatbarMessage(QString msg);
+        void sendChatbarMessage(QString msg, bool priority);
 		void pttReleased();
 		void whisperReleased(QVariant scdata);
 		void onResetAudio();

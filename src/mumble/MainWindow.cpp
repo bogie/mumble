@@ -166,7 +166,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p) {
 
 	connect(qmUser, SIGNAL(aboutToShow()), this, SLOT(qmUser_aboutToShow()));
 	connect(qmChannel, SIGNAL(aboutToShow()), this, SLOT(qmChannel_aboutToShow()));
-	connect(qteChat, SIGNAL(entered(QString)), this, SLOT(sendChatbarMessage(QString)));
+    connect(qteChat, SIGNAL(entered(QString,bool)), this, SLOT(sendChatbarMessage(QString,bool)));
 
 
 	// Explicitely add actions to mainwindow so their shortcuts are available
@@ -1609,7 +1609,7 @@ void MainWindow::on_qaQuit_triggered() {
 	this->close();
 }
 
-void MainWindow::sendChatbarMessage(QString qsText) {
+void MainWindow::sendChatbarMessage(QString qsText, bool priority) {
 	if (g.uiSession == 0) return; // Check if text & connection is available
 
 	ClientUser *p = pmModel->getUser(qtvUsers->currentIndex());
@@ -1631,8 +1631,13 @@ void MainWindow::sendChatbarMessage(QString qsText) {
 		g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatChannel(c), qsText), tr("Message to channel %1").arg(c->qsName), true);
 	} else {
 		// User message
-		g.sh->sendUserTextMessage(p->uiSession, qsText);
-		g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), qsText), tr("Message to %1").arg(p->qsName), true);
+        if(priority) {
+            g.sh->sendUserPriorityMessage(p->uiSession, qsText);
+            g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), qsText), tr("Priority message to %1").arg(p->qsName), true);
+        } else {
+            g.sh->sendUserTextMessage(p->uiSession, qsText);
+            g.l->log(Log::TextMessage, tr("To %1: %2").arg(Log::formatClientUser(p, Log::Target), qsText), tr("Message to %1").arg(p->qsName), true);
+        }
 	}
 
 	qteChat->clear();

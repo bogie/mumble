@@ -52,6 +52,7 @@ class Plugins;
 class QSettings;
 class Overlay;
 class LCD;
+class PriorityMessageDialog;
 class BonjourClient;
 class OverlayClient;
 class CELTCodec;
@@ -74,6 +75,7 @@ public:
 	QSettings *qs;
 	Overlay *o;
 	LCD *lcd;
+    PriorityMessageDialog *pmsg;
 	BonjourClient *bc;
 	QNetworkAccessManager *nam;
 	int iPushToTalk;

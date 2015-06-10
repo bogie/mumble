@@ -108,10 +108,18 @@ void ChatbarTextEdit::contextMenuEvent(QContextMenuEvent *qcme) {
 	QAction *action = new QAction(tr("Paste and &Send") + QLatin1Char('\t'), menu);
 	action->setEnabled(!QApplication::clipboard()->text().isEmpty());
 	connect(action, SIGNAL(triggered()), this, SLOT(pasteAndSend_triggered()));
-	if (menu->actions().count() > 6)
-		menu->insertAction(menu->actions()[6], action);
-	else
-		menu->addAction(action);
+
+    QAction *priorityAction = new QAction(tr("Paste and Send as priority") + QLatin1Char('\t'), menu);
+    priorityAction->setEnabled(!QApplication::clipboard()->text().isEmpty());
+    connect(priorityAction, SIGNAL(triggered()), this, SLOT(pasteAndSendP_triggered()));
+    if (menu->actions().count() > 6){
+        menu->insertAction(menu->actions()[6], action);
+        menu->insertAction(menu->actions()[7], priorityAction);
+    }
+    else {
+        menu->addAction(action);
+        menu->addAction(priorityAction);
+    }
 
 	menu->exec(qcme->globalPos());
 	delete menu;
@@ -182,7 +190,7 @@ bool ChatbarTextEdit::event(QEvent *evt) {
 			const QString msg = toPlainText();
 			if (!msg.isEmpty()) {
 				addToHistory(msg);
-				emit entered(msg);
+                emit entered(msg, false);
 			}
 			return true;
 		}
@@ -313,7 +321,13 @@ void ChatbarTextEdit::historyDown() {
 void ChatbarTextEdit::pasteAndSend_triggered() {
 	paste();
 	addToHistory(toPlainText());
-	emit entered(toPlainText());
+    emit entered(toPlainText(), false);
+}
+
+void ChatbarTextEdit::pasteAndSendP_triggered() {
+    paste();
+    addToHistory(toPlainText());
+    emit entered(toPlainText(), true);
 }
 
 DockTitleBar::DockTitleBar() : QLabel(tr("Drag here")) {
